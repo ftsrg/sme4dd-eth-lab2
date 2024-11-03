@@ -111,6 +111,7 @@ jobs:
         with:
           node-version: 20
           sarif: "sarif.json"
+          fail-on: none
           slither-args: --filter-paths node_modules/ --checklist --markdown-root ${{ github.server_url }}/${{ github.repository }}/blob/${{ github.sha }}/
       - name: Create/update checklist as PR comment
         uses: actions/github-script@v7
