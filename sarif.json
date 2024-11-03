@@ -1,0 +1,873 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Slither",
+          "informationUri": "https://github.com/crytic/slither",
+          "version": "0.10.4",
+          "rules": [
+            {
+              "id": "0-1-arbitrary-send-eth",
+              "name": "arbitrary-send-eth",
+              "properties": {
+                "precision": "high",
+                "security-severity": "8.0"
+              },
+              "shortDescription": {
+                "text": "Functions that send Ether to arbitrary destinations"
+              },
+              "help": {
+                "text": "Ensure that an arbitrary user cannot withdraw unauthorized funds."
+              }
+            },
+            {
+              "id": "0-1-reentrancy-eth",
+              "name": "reentrancy-eth",
+              "properties": {
+                "precision": "high",
+                "security-severity": "8.0"
+              },
+              "shortDescription": {
+                "text": "Reentrancy vulnerabilities"
+              },
+              "help": {
+                "text": "Apply the [`check-effects-interactions pattern`](http://solidity.readthedocs.io/en/v0.4.21/security-considerations.html#re-entrancy)."
+              }
+            },
+            {
+              "id": "1-1-divide-before-multiply",
+              "name": "divide-before-multiply",
+              "properties": {
+                "precision": "high",
+                "security-severity": "4.0"
+              },
+              "shortDescription": {
+                "text": "Divide before multiply"
+              },
+              "help": {
+                "text": "Consider ordering multiplication before division."
+              }
+            },
+            {
+              "id": "1-1-unused-return",
+              "name": "unused-return",
+              "properties": {
+                "precision": "high",
+                "security-severity": "4.0"
+              },
+              "shortDescription": {
+                "text": "Unused return"
+              },
+              "help": {
+                "text": "Ensure that all the return values of the function calls are used."
+              }
+            },
+            {
+              "id": "2-1-calls-loop",
+              "name": "calls-loop",
+              "properties": {
+                "precision": "high",
+                "security-severity": "3.0"
+              },
+              "shortDescription": {
+                "text": "Calls inside a loop"
+              },
+              "help": {
+                "text": "Favor [pull over push](https://github.com/ethereum/wiki/wiki/Safety#favor-pull-over-push-for-external-calls) strategy for external calls."
+              }
+            },
+            {
+              "id": "2-1-reentrancy-benign",
+              "name": "reentrancy-benign",
+              "properties": {
+                "precision": "high",
+                "security-severity": "3.0"
+              },
+              "shortDescription": {
+                "text": "Reentrancy vulnerabilities"
+              },
+              "help": {
+                "text": "Apply the [`check-effects-interactions` pattern](http://solidity.readthedocs.io/en/v0.4.21/security-considerations.html#re-entrancy)."
+              }
+            },
+            {
+              "id": "2-1-reentrancy-events",
+              "name": "reentrancy-events",
+              "properties": {
+                "precision": "high",
+                "security-severity": "3.0"
+              },
+              "shortDescription": {
+                "text": "Reentrancy vulnerabilities"
+              },
+              "help": {
+                "text": "Apply the [`check-effects-interactions` pattern](https://docs.soliditylang.org/en/latest/security-considerations.html#re-entrancy)."
+              }
+            },
+            {
+              "id": "3-1-costly-loop",
+              "name": "costly-loop",
+              "properties": {
+                "precision": "high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "Costly operations inside a loop"
+              },
+              "help": {
+                "text": "Use a local variable to hold the loop computation result."
+              }
+            },
+            {
+              "id": "3-1-dead-code",
+              "name": "dead-code",
+              "properties": {
+                "precision": "high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "Dead-code"
+              },
+              "help": {
+                "text": "Remove unused functions."
+              }
+            },
+            {
+              "id": "3-0-solc-version",
+              "name": "solc-version",
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "Incorrect versions of Solidity"
+              },
+              "help": {
+                "text": "\nDeploy with a recent version of Solidity (at least 0.8.0) with no known severe issues.\n\nUse a simple pragma version that allows any of these versions.\nConsider using the latest version of Solidity for testing."
+              }
+            },
+            {
+              "id": "3-0-low-level-calls",
+              "name": "low-level-calls",
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "Low-level calls"
+              },
+              "help": {
+                "text": "Avoid low-level calls. Check the call success. If the call is meant for a contract, check for code existence."
+              }
+            },
+            {
+              "id": "3-0-naming-convention",
+              "name": "naming-convention",
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "Conformance to Solidity naming conventions"
+              },
+              "help": {
+                "text": "Follow the Solidity [naming convention](https://solidity.readthedocs.io/en/v0.4.25/style-guide.html#naming-conventions)."
+              }
+            },
+            {
+              "id": "4-0-immutable-states",
+              "name": "immutable-states",
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "State variables that could be declared immutable"
+              },
+              "help": {
+                "text": "Add the `immutable` attribute to state variables that never change or are set only in the constructor."
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "0-1-arbitrary-send-eth",
+          "message": {
+            "text": "NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102) sends eth to arbitrary user\n\tDangerous calls:\n\t- (sent,None) = address(msg.sender).call{value: withdrawAmount}() (contracts/NftInvestmentFund.sol#94)\n",
+            "markdown": "[NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102) sends eth to arbitrary user\n\tDangerous calls:\n\t- [(sent,None) = address(msg.sender).call{value: withdrawAmount}()](contracts/NftInvestmentFund.sol#L94)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 90,
+                  "endLine": 102
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "4730702f71edceeeb6705552d689d7c3457987fda7a55dbbbf24acfed0d4ff36"
+          }
+        },
+        {
+          "ruleId": "0-1-arbitrary-send-eth",
+          "message": {
+            "text": "NftInvestmentFund.buyNFT(address,uint256) (contracts/NftInvestmentFund.sol#109-119) sends eth to arbitrary user\n\tDangerous calls:\n\t- exchange.buyNFT{value: price}(listingId) (contracts/NftInvestmentFund.sol#118)\n",
+            "markdown": "[NftInvestmentFund.buyNFT(address,uint256)](contracts/NftInvestmentFund.sol#L109-L119) sends eth to arbitrary user\n\tDangerous calls:\n\t- [exchange.buyNFT{value: price}(listingId)](contracts/NftInvestmentFund.sol#L118)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 109,
+                  "endLine": 119
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "b172182661e4f9f176953f3aac421fdc0a2483900a7092adbc055d4c5784aa23"
+          }
+        },
+        {
+          "ruleId": "0-1-reentrancy-eth",
+          "message": {
+            "text": "Reentrancy in NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102):\n\tExternal calls:\n\t- (sent,None) = address(msg.sender).call{value: withdrawAmount}() (contracts/NftInvestmentFund.sol#94)\n\tState variables written after the call(s):\n\t- balanceAtEnd -= withdrawAmount (contracts/NftInvestmentFund.sol#98)\n\tNftInvestmentFund.balanceAtEnd (contracts/NftInvestmentFund.sol#24) can be used in cross function reentrancies:\n\t- NftInvestmentFund.balanceAtEnd (contracts/NftInvestmentFund.sol#24)\n\t- NftInvestmentFund.closeFund() (contracts/NftInvestmentFund.sol#182-192)\n\t- NftInvestmentFund.constructor(string,string,uint256,uint256,uint256) (contracts/NftInvestmentFund.sol#40-60)\n\t- NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102)\n\t- fundTokensAtEnd -= fundToken.balanceOf(msg.sender) (contracts/NftInvestmentFund.sol#99)\n\tNftInvestmentFund.fundTokensAtEnd (contracts/NftInvestmentFund.sol#23) can be used in cross function reentrancies:\n\t- NftInvestmentFund.closeFund() (contracts/NftInvestmentFund.sol#182-192)\n\t- NftInvestmentFund.fundTokensAtEnd (contracts/NftInvestmentFund.sol#23)\n\t- NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102)\n",
+            "markdown": "Reentrancy in [NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102):\n\tExternal calls:\n\t- [(sent,None) = address(msg.sender).call{value: withdrawAmount}()](contracts/NftInvestmentFund.sol#L94)\n\tState variables written after the call(s):\n\t- [balanceAtEnd -= withdrawAmount](contracts/NftInvestmentFund.sol#L98)\n\t[NftInvestmentFund.balanceAtEnd](contracts/NftInvestmentFund.sol#L24) can be used in cross function reentrancies:\n\t- [NftInvestmentFund.balanceAtEnd](contracts/NftInvestmentFund.sol#L24)\n\t- [NftInvestmentFund.closeFund()](contracts/NftInvestmentFund.sol#L182-L192)\n\t- [NftInvestmentFund.constructor(string,string,uint256,uint256,uint256)](contracts/NftInvestmentFund.sol#L40-L60)\n\t- [NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102)\n\t- [fundTokensAtEnd -= fundToken.balanceOf(msg.sender)](contracts/NftInvestmentFund.sol#L99)\n\t[NftInvestmentFund.fundTokensAtEnd](contracts/NftInvestmentFund.sol#L23) can be used in cross function reentrancies:\n\t- [NftInvestmentFund.closeFund()](contracts/NftInvestmentFund.sol#L182-L192)\n\t- [NftInvestmentFund.fundTokensAtEnd](contracts/NftInvestmentFund.sol#L23)\n\t- [NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 90,
+                  "endLine": 102
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "218bf0de039002dc14d236489713493780e746dc4fa74ea6e095ebcc3e4eae36"
+          }
+        },
+        {
+          "ruleId": "0-1-reentrancy-eth",
+          "message": {
+            "text": "Reentrancy in NftExchange.buyNFT(uint256) (contracts/NftExchange.sol#63-75):\n\tExternal calls:\n\t- (sent,None) = listing.seller.call{value: listing.price}() (contracts/NftExchange.sol#68)\n\t- IERC721(listing.nftContract).safeTransferFrom(address(this),msg.sender,listing.nftTokenId) (contracts/NftExchange.sol#70)\n\tExternal calls sending eth:\n\t- (sent,None) = listing.seller.call{value: listing.price}() (contracts/NftExchange.sol#68)\n\tState variables written after the call(s):\n\t- listing.isSold = true (contracts/NftExchange.sol#72)\n\tNftExchange.listings (contracts/NftExchange.sol#22) can be used in cross function reentrancies:\n\t- NftExchange.buyNFT(uint256) (contracts/NftExchange.sol#63-75)\n\t- NftExchange.listings (contracts/NftExchange.sol#22)\n\t- NftExchange.sellNFT(address,uint256,uint256) (contracts/NftExchange.sol#41-57)\n",
+            "markdown": "Reentrancy in [NftExchange.buyNFT(uint256)](contracts/NftExchange.sol#L63-L75):\n\tExternal calls:\n\t- [(sent,None) = listing.seller.call{value: listing.price}()](contracts/NftExchange.sol#L68)\n\t- [IERC721(listing.nftContract).safeTransferFrom(address(this),msg.sender,listing.nftTokenId)](contracts/NftExchange.sol#L70)\n\tExternal calls sending eth:\n\t- [(sent,None) = listing.seller.call{value: listing.price}()](contracts/NftExchange.sol#L68)\n\tState variables written after the call(s):\n\t- [listing.isSold = true](contracts/NftExchange.sol#L72)\n\t[NftExchange.listings](contracts/NftExchange.sol#L22) can be used in cross function reentrancies:\n\t- [NftExchange.buyNFT(uint256)](contracts/NftExchange.sol#L63-L75)\n\t- [NftExchange.listings](contracts/NftExchange.sol#L22)\n\t- [NftExchange.sellNFT(address,uint256,uint256)](contracts/NftExchange.sol#L41-L57)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftExchange.sol"
+                },
+                "region": {
+                  "startLine": 63,
+                  "endLine": 75
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "9ad69299c4147451812b54005074cbeba8f304d25a55f3656e74874d9f5e2d2e"
+          }
+        },
+        {
+          "ruleId": "1-1-divide-before-multiply",
+          "message": {
+            "text": "MallorysMaliciousMisappropriation.receive() (contracts/MallorysMaliciousMisappropriation.sol#20-26) performs a multiplication on the result of a division:\n\t- withdrawAmount = (nftInvestmentFund.balanceAtEnd() / nftInvestmentFund.fundTokensAtEnd()) * tokenCount (contracts/MallorysMaliciousMisappropriation.sol#22)\n",
+            "markdown": "[MallorysMaliciousMisappropriation.receive()](contracts/MallorysMaliciousMisappropriation.sol#L20-L26) performs a multiplication on the result of a division:\n\t- [withdrawAmount = (nftInvestmentFund.balanceAtEnd() / nftInvestmentFund.fundTokensAtEnd()) * tokenCount](contracts/MallorysMaliciousMisappropriation.sol#L22)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/MallorysMaliciousMisappropriation.sol"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 26
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "049534b8255cce983ff237ac20538ad6c28046917247a0fad14c4d2db0508995"
+          }
+        },
+        {
+          "ruleId": "1-1-divide-before-multiply",
+          "message": {
+            "text": "NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102) performs a multiplication on the result of a division:\n\t- withdrawAmount = (balanceAtEnd / fundTokensAtEnd) * fundToken.balanceOf(msg.sender) (contracts/NftInvestmentFund.sol#92)\n",
+            "markdown": "[NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102) performs a multiplication on the result of a division:\n\t- [withdrawAmount = (balanceAtEnd / fundTokensAtEnd) * fundToken.balanceOf(msg.sender)](contracts/NftInvestmentFund.sol#L92)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 90,
+                  "endLine": 102
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "6ec8febb57ec22c7cbf7055aff62d0eeb24227a4def0f9084e6bf15e71262b6a"
+          }
+        },
+        {
+          "ruleId": "1-1-unused-return",
+          "message": {
+            "text": "MallorysMaliciousMisappropriation.attack() (contracts/MallorysMaliciousMisappropriation.sol#28-36) ignores return value by fundToken.approve(address(nftInvestmentFund),tokenCount) (contracts/MallorysMaliciousMisappropriation.sol#33)\n",
+            "markdown": "[MallorysMaliciousMisappropriation.attack()](contracts/MallorysMaliciousMisappropriation.sol#L28-L36) ignores return value by [fundToken.approve(address(nftInvestmentFund),tokenCount)](contracts/MallorysMaliciousMisappropriation.sol#L33)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/MallorysMaliciousMisappropriation.sol"
+                },
+                "region": {
+                  "startLine": 28,
+                  "endLine": 36
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "6b7470a3860e0e49b1e28cc7759a77e89702779ce219ee54db5cfeeaba34e203"
+          }
+        },
+        {
+          "ruleId": "1-1-unused-return",
+          "message": {
+            "text": "NftInvestmentFund.registerNFTSales() (contracts/NftInvestmentFund.sol#165-179) ignores return value by (None,None,None,None,None,isSold) = exchange.listings(activeListing.listingId) (contracts/NftInvestmentFund.sol#170)\n",
+            "markdown": "[NftInvestmentFund.registerNFTSales()](contracts/NftInvestmentFund.sol#L165-L179) ignores return value by [(None,None,None,None,None,isSold) = exchange.listings(activeListing.listingId)](contracts/NftInvestmentFund.sol#L170)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 165,
+                  "endLine": 179
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "db5dc232cd1f94762b9cb3f972eba37638e4dcf882bca0d846fbadc0cece313e"
+          }
+        },
+        {
+          "ruleId": "1-1-unused-return",
+          "message": {
+            "text": "NftInvestmentFund.buyNFT(address,uint256) (contracts/NftInvestmentFund.sol#109-119) ignores return value by (None,None,None,None,price,None) = exchange.listings(listingId) (contracts/NftInvestmentFund.sol#115)\n",
+            "markdown": "[NftInvestmentFund.buyNFT(address,uint256)](contracts/NftInvestmentFund.sol#L109-L119) ignores return value by [(None,None,None,None,price,None) = exchange.listings(listingId)](contracts/NftInvestmentFund.sol#L115)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 109,
+                  "endLine": 119
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "f8f32f0a822548c0d039e82bd972f13a1cbfc4f9657a943f537f402e2ed1e963"
+          }
+        },
+        {
+          "ruleId": "2-1-calls-loop",
+          "message": {
+            "text": "NftInvestmentFund.registerNFTSales() (contracts/NftInvestmentFund.sol#165-179) has external calls inside a loop: (None,None,None,None,None,isSold) = exchange.listings(activeListing.listingId) (contracts/NftInvestmentFund.sol#170)\n",
+            "markdown": "[NftInvestmentFund.registerNFTSales()](contracts/NftInvestmentFund.sol#L165-L179) has external calls inside a loop: [(None,None,None,None,None,isSold) = exchange.listings(activeListing.listingId)](contracts/NftInvestmentFund.sol#L170)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 165,
+                  "endLine": 179
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "f1e2479ca2180ad90af85e52f708c4ae3e7a428481cada7277eeb581b3737ff2"
+          }
+        },
+        {
+          "ruleId": "2-1-reentrancy-benign",
+          "message": {
+            "text": "Reentrancy in NftInvestmentFund.sellNFT(address,address,uint256,uint256) (contracts/NftInvestmentFund.sol#146-162):\n\tExternal calls:\n\t- IERC721(nftAddress).approve(nftExchangeAddress,nftTokenId) (contracts/NftInvestmentFund.sol#155)\n\t- listingId = exchange.sellNFT(nftAddress,nftTokenId,price) (contracts/NftInvestmentFund.sol#157)\n\tState variables written after the call(s):\n\t- activeListings.push(ActiveListing({nftExchangeAddress:nftExchangeAddress,listingId:listingId})) (contracts/NftInvestmentFund.sol#159)\n\t- _removeNFTToken(nftAddress,nftTokenId) (contracts/NftInvestmentFund.sol#161)\n\t\t- ownedNftAddresses[j] = ownedNftAddresses[ownedNftAddresses.length - 1] (contracts/NftInvestmentFund.sol#231)\n\t\t- ownedNftAddresses.pop() (contracts/NftInvestmentFund.sol#232)\n",
+            "markdown": "Reentrancy in [NftInvestmentFund.sellNFT(address,address,uint256,uint256)](contracts/NftInvestmentFund.sol#L146-L162):\n\tExternal calls:\n\t- [IERC721(nftAddress).approve(nftExchangeAddress,nftTokenId)](contracts/NftInvestmentFund.sol#L155)\n\t- [listingId = exchange.sellNFT(nftAddress,nftTokenId,price)](contracts/NftInvestmentFund.sol#L157)\n\tState variables written after the call(s):\n\t- [activeListings.push(ActiveListing({nftExchangeAddress:nftExchangeAddress,listingId:listingId}))](contracts/NftInvestmentFund.sol#L159)\n\t- [_removeNFTToken(nftAddress,nftTokenId)](contracts/NftInvestmentFund.sol#L161)\n\t\t- [ownedNftAddresses[j] = ownedNftAddresses[ownedNftAddresses.length - 1]](contracts/NftInvestmentFund.sol#L231)\n\t\t- [ownedNftAddresses.pop()](contracts/NftInvestmentFund.sol#L232)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 146,
+                  "endLine": 162
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "0ea1613884f49a5b166983a05e397ab6d7c6d1fe8d0a5eff0a31e16132970208"
+          }
+        },
+        {
+          "ruleId": "2-1-reentrancy-benign",
+          "message": {
+            "text": "Reentrancy in NftExchange.sellNFT(address,uint256,uint256) (contracts/NftExchange.sol#41-57):\n\tExternal calls:\n\t- IERC721(nftContract).safeTransferFrom(msg.sender,address(this),nftTokenId) (contracts/NftExchange.sol#42)\n\tState variables written after the call(s):\n\t- listingId = _nextListingId ++ (contracts/NftExchange.sol#44)\n\t- listings[listingId] = Listing({listingId:listingId,nftContract:nftContract,nftTokenId:nftTokenId,seller:address(msg.sender),price:price,isSold:false}) (contracts/NftExchange.sol#46-53)\n",
+            "markdown": "Reentrancy in [NftExchange.sellNFT(address,uint256,uint256)](contracts/NftExchange.sol#L41-L57):\n\tExternal calls:\n\t- [IERC721(nftContract).safeTransferFrom(msg.sender,address(this),nftTokenId)](contracts/NftExchange.sol#L42)\n\tState variables written after the call(s):\n\t- [listingId = _nextListingId ++](contracts/NftExchange.sol#L44)\n\t- [listings[listingId] = Listing({listingId:listingId,nftContract:nftContract,nftTokenId:nftTokenId,seller:address(msg.sender),price:price,isSold:false})](contracts/NftExchange.sol#L46-L53)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftExchange.sol"
+                },
+                "region": {
+                  "startLine": 41,
+                  "endLine": 57
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "2950351322c3d10ce930443547422678a35b35a927cd4937e24d1db8331f55d3"
+          }
+        },
+        {
+          "ruleId": "2-1-reentrancy-events",
+          "message": {
+            "text": "Reentrancy in NftExchange.buyNFT(uint256) (contracts/NftExchange.sol#63-75):\n\tExternal calls:\n\t- (sent,None) = listing.seller.call{value: listing.price}() (contracts/NftExchange.sol#68)\n\t- IERC721(listing.nftContract).safeTransferFrom(address(this),msg.sender,listing.nftTokenId) (contracts/NftExchange.sol#70)\n\tExternal calls sending eth:\n\t- (sent,None) = listing.seller.call{value: listing.price}() (contracts/NftExchange.sol#68)\n\tEvent emitted after the call(s):\n\t- NftSold(listingId,msg.sender) (contracts/NftExchange.sol#74)\n",
+            "markdown": "Reentrancy in [NftExchange.buyNFT(uint256)](contracts/NftExchange.sol#L63-L75):\n\tExternal calls:\n\t- [(sent,None) = listing.seller.call{value: listing.price}()](contracts/NftExchange.sol#L68)\n\t- [IERC721(listing.nftContract).safeTransferFrom(address(this),msg.sender,listing.nftTokenId)](contracts/NftExchange.sol#L70)\n\tExternal calls sending eth:\n\t- [(sent,None) = listing.seller.call{value: listing.price}()](contracts/NftExchange.sol#L68)\n\tEvent emitted after the call(s):\n\t- [NftSold(listingId,msg.sender)](contracts/NftExchange.sol#L74)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftExchange.sol"
+                },
+                "region": {
+                  "startLine": 63,
+                  "endLine": 75
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "000a06f5fd84eeae40a264e6a29553fa079dba94ec5e52957c878ae82ef1e07b"
+          }
+        },
+        {
+          "ruleId": "2-1-reentrancy-events",
+          "message": {
+            "text": "Reentrancy in NftExchange.sellNFT(address,uint256,uint256) (contracts/NftExchange.sol#41-57):\n\tExternal calls:\n\t- IERC721(nftContract).safeTransferFrom(msg.sender,address(this),nftTokenId) (contracts/NftExchange.sol#42)\n\tEvent emitted after the call(s):\n\t- NftOffered(listingId,nftContract,nftTokenId,msg.sender,price) (contracts/NftExchange.sol#55)\n",
+            "markdown": "Reentrancy in [NftExchange.sellNFT(address,uint256,uint256)](contracts/NftExchange.sol#L41-L57):\n\tExternal calls:\n\t- [IERC721(nftContract).safeTransferFrom(msg.sender,address(this),nftTokenId)](contracts/NftExchange.sol#L42)\n\tEvent emitted after the call(s):\n\t- [NftOffered(listingId,nftContract,nftTokenId,msg.sender,price)](contracts/NftExchange.sol#L55)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftExchange.sol"
+                },
+                "region": {
+                  "startLine": 41,
+                  "endLine": 57
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "e6a7b8fa2b872b256b01bb2ce6914e76aa6c400084f7c567418bfcc68f783086"
+          }
+        },
+        {
+          "ruleId": "3-1-costly-loop",
+          "message": {
+            "text": "NftInvestmentFund.registerNFTSales() (contracts/NftInvestmentFund.sol#165-179) has costly operations inside a loop:\n\t- activeListings.pop() (contracts/NftInvestmentFund.sol#174)\n",
+            "markdown": "[NftInvestmentFund.registerNFTSales()](contracts/NftInvestmentFund.sol#L165-L179) has costly operations inside a loop:\n\t- [activeListings.pop()](contracts/NftInvestmentFund.sol#L174)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 165,
+                  "endLine": 179
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "300c5460a358ae70fe4a69f01c0fe86f505252f239fe6683f18f4d15b648e614"
+          }
+        },
+        {
+          "ruleId": "3-1-dead-code",
+          "message": {
+            "text": "FunnyNft._increaseBalance(address,uint128) (contracts/FunnyNft.sol#33-35) is never used and should be removed\n",
+            "markdown": "[FunnyNft._increaseBalance(address,uint128)](contracts/FunnyNft.sol#L33-L35) is never used and should be removed\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/FunnyNft.sol"
+                },
+                "region": {
+                  "startLine": 33,
+                  "endLine": 35
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "62d217c9ad27e000f11e27c0134542c0b691252506a0614e4204400b9789de45"
+          }
+        },
+        {
+          "ruleId": "3-1-dead-code",
+          "message": {
+            "text": "UniqueNft._increaseBalance(address,uint128) (contracts/UniqueNft.sol#27-29) is never used and should be removed\n",
+            "markdown": "[UniqueNft._increaseBalance(address,uint128)](contracts/UniqueNft.sol#L27-L29) is never used and should be removed\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/UniqueNft.sol"
+                },
+                "region": {
+                  "startLine": 27,
+                  "endLine": 29
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "9750c9c5963e5e89d88182a62db096e13c5d79b9879935c9cae7a3512ffdad4e"
+          }
+        },
+        {
+          "ruleId": "3-0-solc-version",
+          "message": {
+            "text": "Version constraint ^0.8.22 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication.\nIt is used by:\n\t- ^0.8.22 (contracts/FundToken.sol#3)\n\t- ^0.8.22 (contracts/FunnyNft.sol#3)\n\t- ^0.8.22 (contracts/MallorysMaliciousMisappropriation.sol#2)\n\t- ^0.8.22 (contracts/NftExchange.sol#3)\n\t- ^0.8.22 (contracts/NftInvestmentFund.sol#3)\n\t- ^0.8.22 (contracts/UniqueNft.sol#3)\n",
+            "markdown": "Version constraint ^0.8.22 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- VerbatimInvalidDeduplication.\nIt is used by:\n\t- [^0.8.22](contracts/FundToken.sol#L3)\n\t- [^0.8.22](contracts/FunnyNft.sol#L3)\n\t- [^0.8.22](contracts/MallorysMaliciousMisappropriation.sol#L2)\n\t- [^0.8.22](contracts/NftExchange.sol#L3)\n\t- [^0.8.22](contracts/NftInvestmentFund.sol#L3)\n\t- [^0.8.22](contracts/UniqueNft.sol#L3)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/FundToken.sol"
+                },
+                "region": {
+                  "startLine": 3,
+                  "endLine": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "dd106cf82eb2ab2e56b72f95bcb4aa2e072cfa30afb06aea60b9aff6e6fe1250"
+          }
+        },
+        {
+          "ruleId": "3-0-low-level-calls",
+          "message": {
+            "text": "Low level call in NftExchange.buyNFT(uint256) (contracts/NftExchange.sol#63-75):\n\t- (sent,None) = listing.seller.call{value: listing.price}() (contracts/NftExchange.sol#68)\n",
+            "markdown": "Low level call in [NftExchange.buyNFT(uint256)](contracts/NftExchange.sol#L63-L75):\n\t- [(sent,None) = listing.seller.call{value: listing.price}()](contracts/NftExchange.sol#L68)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftExchange.sol"
+                },
+                "region": {
+                  "startLine": 63,
+                  "endLine": 75
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "0018855c3d812c2f1ec33cd0cd81a4380d777754514ba40ff0dacbccbc49a62b"
+          }
+        },
+        {
+          "ruleId": "3-0-low-level-calls",
+          "message": {
+            "text": "Low level call in NftInvestmentFund.withdraw() (contracts/NftInvestmentFund.sol#90-102):\n\t- (sent,None) = address(msg.sender).call{value: withdrawAmount}() (contracts/NftInvestmentFund.sol#94)\n",
+            "markdown": "Low level call in [NftInvestmentFund.withdraw()](contracts/NftInvestmentFund.sol#L90-L102):\n\t- [(sent,None) = address(msg.sender).call{value: withdrawAmount}()](contracts/NftInvestmentFund.sol#L94)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 90,
+                  "endLine": 102
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "23286d691e7899d0be9743363f09efabe573d7bb4f616d75490f60fa36091fcb"
+          }
+        },
+        {
+          "ruleId": "3-0-low-level-calls",
+          "message": {
+            "text": "Low level call in MallorysMaliciousMisappropriation.withdraw() (contracts/MallorysMaliciousMisappropriation.sol#38-41):\n\t- (sent,None) = address(msg.sender).call{value: address(this).balance}() (contracts/MallorysMaliciousMisappropriation.sol#39)\n",
+            "markdown": "Low level call in [MallorysMaliciousMisappropriation.withdraw()](contracts/MallorysMaliciousMisappropriation.sol#L38-L41):\n\t- [(sent,None) = address(msg.sender).call{value: address(this).balance}()](contracts/MallorysMaliciousMisappropriation.sol#L39)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/MallorysMaliciousMisappropriation.sol"
+                },
+                "region": {
+                  "startLine": 38,
+                  "endLine": 41
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "8ad05337f50348ce8f024c2284ccf751eb6376bb3c19c5d22b5ae3d3785c7b80"
+          }
+        },
+        {
+          "ruleId": "3-0-naming-convention",
+          "message": {
+            "text": "Parameter NftInvestmentFund.invest(uint256)._tokenCount (contracts/NftInvestmentFund.sol#82) is not in mixedCase\n",
+            "markdown": "Parameter [NftInvestmentFund.invest(uint256)._tokenCount](contracts/NftInvestmentFund.sol#L82) is not in mixedCase\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 82,
+                  "endLine": 82
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "f0b532daaf85b0a4d83bd8ef201e6a5338cc53f7a7492903674c5c0fa0e24fcb"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "NftInvestmentFund.pricePerToken (contracts/NftInvestmentFund.sol#18) should be immutable \n",
+            "markdown": "[NftInvestmentFund.pricePerToken](contracts/NftInvestmentFund.sol#L18) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "0dfe930e8c3db73624c4753a7aa9858b575962664fe9904b0bf7c4ef7c43cca9"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "MallorysMaliciousMisappropriation.nftInvestmentFund (contracts/MallorysMaliciousMisappropriation.sol#9) should be immutable \n",
+            "markdown": "[MallorysMaliciousMisappropriation.nftInvestmentFund](contracts/MallorysMaliciousMisappropriation.sol#L9) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/MallorysMaliciousMisappropriation.sol"
+                },
+                "region": {
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "2848816308f20ee139eff83a06530d5c298133066a8beb1d1ca97a341a67b941"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "NftInvestmentFund.fundToken (contracts/NftInvestmentFund.sol#17) should be immutable \n",
+            "markdown": "[NftInvestmentFund.fundToken](contracts/NftInvestmentFund.sol#L17) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 17,
+                  "endLine": 17
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "8d12e8ca9fa1081f1334eae788e886d7df1b500ad7645fac9f26efd4eaa67d23"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "NftInvestmentFund.investmentEnd (contracts/NftInvestmentFund.sol#21) should be immutable \n",
+            "markdown": "[NftInvestmentFund.investmentEnd](contracts/NftInvestmentFund.sol#L21) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 21,
+                  "endLine": 21
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "92c3dac72c73c208e9924d67477068e9baa7173fe4d211592af3455affa0e013"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "NftInvestmentFund.fundingEnd (contracts/NftInvestmentFund.sol#20) should be immutable \n",
+            "markdown": "[NftInvestmentFund.fundingEnd](contracts/NftInvestmentFund.sol#L20) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 20,
+                  "endLine": 20
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "92d23de1e9adc72cbf1107ea153cefff9f7c40e605322fd34167fabf33198b8a"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "NftInvestmentFund.fundManager (contracts/NftInvestmentFund.sol#14) should be immutable \n",
+            "markdown": "[NftInvestmentFund.fundManager](contracts/NftInvestmentFund.sol#L14) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/NftInvestmentFund.sol"
+                },
+                "region": {
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "bf2e7e495ab1775401e9ddd377003fa4cb39a2be32bd1daa4a5a3c6420fca716"
+          }
+        }
+      ]
+    }
+  ]
+}
