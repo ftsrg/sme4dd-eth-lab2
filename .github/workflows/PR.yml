@@ -52,4 +52,4 @@ jobs:
           level: warning
           fail_on_error: true
           filter_mode: nofilter
-          prettier_flags: "--check \"**/*.{js,sol,ts,json,jsx,tsx}\""
+          prettier_flags: "--check \"**/*.{js,sol,ts,json,jsx,tsx}\" ."
