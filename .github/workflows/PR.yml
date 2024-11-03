@@ -133,5 +133,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cat sarif.json
-          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -name=slither 
+          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=info -name=slither 
         
