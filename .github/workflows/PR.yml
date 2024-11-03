@@ -6,7 +6,7 @@ on:
 
 jobs:
   eslint:
-    name: eslint
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
           reporter: github-pr-check
           filter_mode: nofilter
   prettier:
-    name: prettier
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
           filter_mode: nofilter
           prettier_flags: "**/*.{js,sol,ts,json,jsx,tsx}"
   solhint:
-    name: solhint
+    name: Solhint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -66,7 +66,7 @@ jobs:
         run: |
           npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -level=error -fail-level=none -filter-mode=nofilter -name=solhint 
   coverage:
-    name: coverage
+    name: Coverage
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -97,6 +97,7 @@ jobs:
           working-directory: .
           update-comment: true
   slither:
+    name: Slither
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
