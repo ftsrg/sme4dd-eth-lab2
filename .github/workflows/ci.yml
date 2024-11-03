@@ -50,7 +50,11 @@ jobs:
         id: run_tests
         continue-on-error: true
         run: |
-          echo "test_output=$(npm run --silent test)\n" >> $GITHUB_OUTPUT
+          {
+            echo "test_output<<RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
+            npm run --silent test
+            echo "RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
+          } >> "$GITHUB_OUTPUT"
       - name: "Add test summary"
         run: |
           echo "## Tests result" >> $GITHUB_STEP_SUMMARY
