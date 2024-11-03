@@ -55,6 +55,7 @@ jobs:
             cat /tmp/TEST_OUTPUT
             echo "RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
           } >> "$GITHUB_OUTPUT"
+          cat /tmp/TEST_OUTPUT
           if [ ${FAILED:-0} -eq 1 ]
           then
             exit 1
