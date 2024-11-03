@@ -48,8 +48,8 @@ jobs:
       - uses: EPMatt/reviewdog-action-prettier@v1
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+          reporter: github-pr-check
           level: warning
           fail_on_error: true
           filter_mode: nofilter
-          prettier_flags: "--check \"**/*.{js,sol,ts,json,jsx,tsx}\" ."
+          prettier_flags: "**/*.{js,sol,ts,json,jsx,tsx}"
