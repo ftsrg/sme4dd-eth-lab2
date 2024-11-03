@@ -49,11 +49,16 @@ jobs:
       - name: Test contracts
         id: run_tests
         run: |
+          (npm run --silent test >> /tmp/TEST_OUTPUT) || FAILED=1
           {
             echo "test_output<<RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
-            npm run --silent test
+            cat /tmp/TEST_OUTPUT
             echo "RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
           } >> "$GITHUB_OUTPUT"
+          if [ ${FAILED:-0} -eq 1 ]
+          then
+            exit 1
+          fi
       - name: "Add test summary"
         if: ${{ success() || failure() }}
         run: |
