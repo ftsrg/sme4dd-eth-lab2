@@ -1,6 +1,6 @@
 [
     {
-    "key": "f5",
+        "key": "f5",
         "command": "-solidity.compile.active",
         "when": "editorTextFocus && editorLangId == 'solidity'"
     },

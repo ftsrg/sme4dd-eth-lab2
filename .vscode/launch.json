@@ -7,28 +7,18 @@
         {
             "name": "Compile (hardhat)",
             "request": "launch",
-            "runtimeArgs": [
-                "hardhat",
-                "compile"
-            ],
+            "runtimeArgs": ["hardhat", "compile"],
             "runtimeExecutable": "npx",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "type": "node",
             "console": "integratedTerminal"
         },
         {
             "name": "Test (hardhat)",
             "request": "launch",
-            "runtimeArgs": [
-                "hardhat",
-                "test"
-            ],
+            "runtimeArgs": ["hardhat", "test"],
             "runtimeExecutable": "npx",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "type": "node",
             "console": "integratedTerminal",
             "preLaunchTask": "npm: compile"
