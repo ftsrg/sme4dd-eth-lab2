@@ -17,8 +17,7 @@ const config = {
                 tabWidth: 4,
                 useTabs: true,
                 singleQuote: false,
-                bracketSpacing: true,
-                explicitTypes: 'always'
+                bracketSpacing: true
             }
         }
     ]

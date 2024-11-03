@@ -6,6 +6,5 @@
     },
     "mochaExplorer.exit": true,
     "editor.formatOnSave": true,
-    "solidity.linter": "solhint",
-    "workspaceKeybindings.myAwesomeTask.enabled": true
+    "solidity.linter": "solhint"
 }

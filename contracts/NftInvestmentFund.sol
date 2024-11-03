@@ -2,10 +2,11 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.22;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
-import "./FundToken.sol";
-import "./NftExchange.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC721Receiver } from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import { FundToken } from "./FundToken.sol";
+import { NftExchange } from "./NftExchange.sol";
 
 contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	bytes32 public constant FUND_MANAGER_ROLE = keccak256("FUND_MANAGER");
@@ -14,10 +15,10 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 
 	string public name;
 	FundToken public fundToken;
-	uint public pricePerToken;
+	uint256 public pricePerToken;
 
-	uint public fundingEnd;
-	uint public investmentEnd;
+	uint256 public fundingEnd;
+	uint256 public investmentEnd;
 	bool public ended;
 	uint256 public fundTokensAtEnd;
 	uint256 public balanceAtEnd;
@@ -31,14 +32,19 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	}
 	ActiveListing[] public activeListings;
 
+	error InvestmentAfterFunding();
+	error TooEarly();
+	error TooLate();
+	error NotEnded();
+
 	constructor(
 		string memory _name,
 		string memory _symbol,
-		uint _pricePerToken,
-		uint _fundingEnd,
-		uint _investmentEnd
+		uint256 _pricePerToken,
+		uint256 _fundingEnd,
+		uint256 _investmentEnd
 	) {
-		require(_investmentEnd > _fundingEnd);
+		if (_investmentEnd <= _fundingEnd) revert InvestmentAfterFunding();
 
 		fundManager = msg.sender;
 		_grantRole(FUND_MANAGER_ROLE, fundManager);
@@ -53,18 +59,18 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 		balanceAtEnd = 0;
 	}
 
-	modifier onlyBefore(uint time) {
-		require(block.timestamp < time, "Too late");
+	modifier onlyBefore(uint256 time) {
+		if (block.timestamp > time) revert TooLate();
 		_;
 	}
 
-	modifier onlyAfter(uint time) {
-		require(block.timestamp > time, "Too early");
+	modifier onlyAfter(uint256 time) {
+		if (block.timestamp < time) revert TooEarly();
 		_;
 	}
 
 	modifier onlyEnded() {
-		require(ended, "Not ended");
+		if (!ended) revert NotEnded();
 		_;
 	}
 
@@ -73,7 +79,7 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	 ****************************************/
 
 	// Inverstor buys tokens
-	function invest(uint _tokenCount) external payable onlyBefore(fundingEnd) {
+	function invest(uint256 _tokenCount) external payable onlyBefore(fundingEnd) {
 		require(msg.value >= _tokenCount * pricePerToken, "Insuffisient funds sent");
 
 		// Mint tokens that represent their investment
@@ -102,7 +108,7 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	// Buy NFT listing at exchange
 	function buyNFT(
 		address nftExchangeAddress,
-		uint listingId
+		uint256 listingId
 	) external onlyAfter(fundingEnd) onlyBefore(investmentEnd) onlyRole(FUND_MANAGER_ROLE) {
 		NftExchange exchange = NftExchange(nftExchangeAddress);
 
@@ -157,7 +163,7 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 
 	// Register NFT sales
 	function registerNFTSales() public onlyAfter(fundingEnd) onlyRole(FUND_MANAGER_ROLE) {
-		for (uint i = 0; i < activeListings.length; ) {
+		for (uint256 i = 0; i < activeListings.length; ) {
 			ActiveListing memory activeListing = activeListings[i];
 
 			NftExchange exchange = NftExchange(activeListing.nftExchangeAddress);
@@ -205,7 +211,7 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 
 	function _removeNFTToken(address nftContract, uint256 nftTokenId) private {
 		uint256[] storage tokenIds = ownedNftTokenIds[nftContract];
-		for (uint i = 0; i < tokenIds.length; i++) {
+		for (uint256 i = 0; i < tokenIds.length; i++) {
 			if (tokenIds[i] == nftTokenId) {
 				tokenIds[i] = tokenIds[tokenIds.length - 1];
 				tokenIds.pop();
@@ -220,7 +226,7 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	}
 
 	function _removeNFTContract(address nftContract) private {
-		for (uint j = 0; j < ownedNftAddresses.length; j++) {
+		for (uint256 j = 0; j < ownedNftAddresses.length; j++) {
 			if (ownedNftAddresses[j] == nftContract) {
 				ownedNftAddresses[j] = ownedNftAddresses[ownedNftAddresses.length - 1];
 				ownedNftAddresses.pop();
