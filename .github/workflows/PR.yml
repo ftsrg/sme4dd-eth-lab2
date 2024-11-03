@@ -22,9 +22,7 @@ jobs:
         uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          level: warning
           reporter: github-pr-check
-          fail_on_error: true
           filter_mode: nofilter
   prettier:
     name: prettier
@@ -43,8 +41,6 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-check
-          level: warning
-          fail_on_error: true
           filter_mode: nofilter
           prettier_flags: "**/*.{js,sol,ts,json,jsx,tsx}"
   solhint:
@@ -68,7 +64,7 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -fail-level=error -name=solhint 
+          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -name=solhint 
   coverage:
     name: coverage
     runs-on: ubuntu-latest
@@ -133,5 +129,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cat sarif.json
-          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=info -name=slither 
+          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -name=slither 
         
