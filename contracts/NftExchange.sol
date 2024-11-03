@@ -2,10 +2,10 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.22;
 
-import "@openzeppelin/contracts/utils/Pausable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import { Pausable } from "@openzeppelin/contracts/utils/Pausable.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC721Receiver } from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
 contract NftExchange is Pausable, Ownable, IERC721Receiver {
 	uint256 private _nextListingId;
@@ -23,6 +23,10 @@ contract NftExchange is Pausable, Ownable, IERC721Receiver {
 
 	event NftOffered(uint256 listingId, address nftContract, uint256 tokenId, address seller, uint256 price);
 	event NftSold(uint256 listingId, address buyer);
+
+	error NFTAlreadySold();
+	error InsufficientFunds();
+	error FailedToSendEther();
 
 	constructor() Ownable(msg.sender) {}
 
@@ -58,11 +62,11 @@ contract NftExchange is Pausable, Ownable, IERC721Receiver {
 
 	function buyNFT(uint256 listingId) public payable whenNotPaused {
 		Listing storage listing = listings[listingId];
-		require(!listing.isSold, "NFT is already sold");
-		require(msg.value >= listing.price, "Insufficient funds");
+		if (listing.isSold) revert NFTAlreadySold();
+		if (msg.value < listing.price) revert InsufficientFunds();
 
 		(bool sent, ) = listing.seller.call{ value: listing.price }("");
-		require(sent, "Not transferred");
+		if (!sent) revert FailedToSendEther();
 		IERC721(listing.nftContract).safeTransferFrom(address(this), msg.sender, listing.nftTokenId);
 
 		listing.isSold = true;
