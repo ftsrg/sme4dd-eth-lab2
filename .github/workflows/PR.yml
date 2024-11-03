@@ -77,7 +77,7 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -fail-level=error -name=solhint 
+          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=warning -fail-level=error -name=solhint 
   coverage:
     name: coverage
     runs-on: ubuntu-latest
@@ -144,5 +144,6 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -fail-level=none -name=slither 
+          cat sarif.json
+          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=warning -name=slither 
         
