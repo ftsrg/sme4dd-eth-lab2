@@ -19,17 +19,17 @@ jobs:
         run: npm ci
       - name: Build contracts
         id: build
-        continue-on-error: true
         run: npm run compile
       - name: "Add build summary"
+        if: ${{ success() || failure() }}
         run: |
           echo "## Build result" >> $GITHUB_STEP_SUMMARY
       - name: "Add build result (success)"
-        if: steps.build.outcome == 'success'
+        if: ${{ success() && steps.build.outcome == 'success' }}
         run: |
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
       - name: "Add build result (failed)"
-        if: steps.build.outcome == 'failure'
+        if: ${{ failure() && steps.build.outcome == 'failure' }}
         run: |
           echo "❌ Failed" >> $GITHUB_STEP_SUMMARY
   test:
@@ -48,7 +48,6 @@ jobs:
         run: npm ci
       - name: Test contracts
         id: run_tests
-        continue-on-error: true
         run: |
           {
             echo "test_output<<RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
@@ -56,14 +55,15 @@ jobs:
             echo "RANDOM_DELIMITER_THAT_MOST_DEFINITELY_WONT_APPEAR_IN_TEXT"
           } >> "$GITHUB_OUTPUT"
       - name: "Add test summary"
+        if: ${{ success() || failure() }}
         run: |
           echo "## Tests result" >> $GITHUB_STEP_SUMMARY
-          echo "\n${{steps.run_tests.outputs.test_output}}\n" >> $GITHUB_STEP_SUMMARY
+          echo "${{steps.run_tests.outputs.test_output}}" >> $GITHUB_STEP_SUMMARY
       - name: "Add test result (success)"
-        if: steps.run_tests.outcome == 'success'
+        if: ${{ success() && steps.run_tests.outcome == 'success' }}
         run: |
           echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
       - name: "Add test result (failed)"
-        if: steps.run_tests.outcome == 'failure'
+        if: ${{ failure() && steps.run_tests.outcome == 'failure' }}
         run: |
           echo "❌ Failed" >> $GITHUB_STEP_SUMMARY
