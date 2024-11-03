@@ -28,4 +28,3 @@ jobs:
           reporter: github-pr-check
           fail_on_error: true
           filter_mode: nofilter
-          eslint_flags: "-c ./eslint.config.mjs"
