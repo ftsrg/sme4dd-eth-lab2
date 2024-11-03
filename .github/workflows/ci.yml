@@ -58,7 +58,7 @@ jobs:
       - name: "Add test summary"
         run: |
           echo "## Tests result" >> $GITHUB_STEP_SUMMARY
-          echo "${{steps.run_tests.outputs.test_output}}"
+          echo "\n${{steps.run_tests.outputs.test_output}}\n" >> $GITHUB_STEP_SUMMARY
       - name: "Add test result (success)"
         if: steps.run_tests.outcome == 'success'
         run: |
