@@ -8,9 +8,6 @@ jobs:
   eslint:
     name: eslint
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,9 +29,6 @@ jobs:
   prettier:
     name: prettier
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,9 +50,6 @@ jobs:
   solhint:
     name: solhint
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,13 +68,10 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=warning -fail-level=error -name=solhint 
+          npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -fail-level=error -name=solhint 
   coverage:
     name: coverage
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -145,5 +133,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cat sarif.json
-          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -level=warning -name=slither 
+          cat sarif.json | reviewdog -f=sarif -reporter=github-pr-check -filter-mode=nofilter -name=slither 
         
