@@ -64,7 +64,11 @@ jobs:
         if: ${{ success() || failure() }}
         run: |
           echo "## Tests result" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "${{steps.run_tests.outputs.test_output}}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
       - name: "Add test result (success)"
         if: ${{ success() && steps.run_tests.outcome == 'success' }}
         run: |
