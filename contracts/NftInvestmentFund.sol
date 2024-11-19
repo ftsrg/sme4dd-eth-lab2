@@ -13,6 +13,8 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 
 	address public fundManager;
 
+	uint public dummy;
+
 	string public name;
 	FundToken public fundToken;
 	uint256 public pricePerToken;
