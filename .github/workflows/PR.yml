@@ -23,7 +23,7 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   reporter: github-pr-check
-                  filter_mode: nofilter
+                  filter_mode: added
     prettier:
         name: Prettier
         runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
               with:
                   github_token: ${{ secrets.github_token }}
                   reporter: github-pr-check
-                  filter_mode: nofilter
+                  filter_mode: added
                   prettier_flags: '**/*.{js,sol,ts,json,jsx,tsx}'
     solhint:
         name: Solhint
@@ -64,7 +64,7 @@ jobs:
               env:
                   REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -level=error -fail-level=none -filter-mode=nofilter -name=solhint
+                  npx solhint -f sarif 'contracts/**/*.sol' | reviewdog -f=sarif -reporter=github-pr-check -level=error -fail-level=none -filter-mode=added -name=solhint
     coverage:
         name: Coverage
         runs-on: ubuntu-latest
