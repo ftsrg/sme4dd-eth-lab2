@@ -10,7 +10,8 @@
         "JuanBlanco.solidity",
         "ms-vscode.test-adapter-converter",
         "hbenl.vscode-test-explorer",
-        "mhutchie.git-graph"
+        "mhutchie.git-graph",
+        "MS-SarifVSCode.sarif-viewer"
     ],
     // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
     "unwantedRecommendations": ["NomicFoundation.hardhat-solidity"]
