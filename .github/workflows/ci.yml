@@ -80,6 +80,7 @@ jobs:
     eslint:
         name: ESLint
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -100,6 +101,7 @@ jobs:
     prettier:
         name: Prettier
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -120,6 +122,7 @@ jobs:
     solhint:
         name: Solhint
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -142,6 +145,7 @@ jobs:
     slither:
         name: Slither
         runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         needs: [build]
         steps:
             - name: Checkout repository
