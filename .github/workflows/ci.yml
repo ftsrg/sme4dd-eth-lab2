@@ -84,20 +84,20 @@ jobs:
         needs: [build]
         steps:
             - name: Checkout repository
-                uses: actions/checkout@v4
+              uses: actions/checkout@v4
             - name: Setup reviewdog
-                uses: reviewdog/action-setup@v1
-                with:
-                    reviewdog_version: latest
+              uses: reviewdog/action-setup@v1
+              with:
+                  reviewdog_version: latest
             - name: Run Slither
-                uses: crytic/slither-action@v0.4.0
-                id: slither
-                with:
-                    node-version: 20
-                    sarif: 'results.sarif'
-                    fail-on: none
-                    slither-args: --filter-paths node_modules/
+              uses: crytic/slither-action@v0.4.0
+              id: slither
+              with:
+                  node-version: 20
+                  sarif: 'results.sarif'
+                  fail-on: none
+                  slither-args: --filter-paths node_modules/
             - name: Upload SARIF file
-                uses: github/codeql-action/upload-sarif@v3
-                with:
-                    sarif_file: ${{ steps.slither.outputs.sarif }}
+              uses: github/codeql-action/upload-sarif@v3
+              with:
+                  sarif_file: ${{ steps.slither.outputs.sarif }}
