@@ -118,21 +118,6 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 		exchange.buyNFT{ value: price }(listingId);
 	}
 
-	// Handle receiving NFT
-	function onERC721Received(
-		address,
-		address,
-		uint256 tokenId,
-		bytes calldata
-	) external onlyAfter(fundingEnd) onlyBefore(investmentEnd) returns (bytes4) {
-		if (ownedNftTokenIds[msg.sender].length == 0) {
-			ownedNftAddresses.push(msg.sender);
-		}
-		ownedNftTokenIds[msg.sender].push(tokenId);
-
-		return IERC721Receiver.onERC721Received.selector;
-	}
-
 	// Register NFT not transferred via safeTransferFrom
 	function registerNFT(
 		address nftAddress,
@@ -196,6 +181,21 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 	 ****************************************/
 
 	receive() external payable {}
+
+	// Handle receiving NFT
+	function onERC721Received(
+		address,
+		address,
+		uint256 tokenId,
+		bytes calldata
+	) external onlyAfter(fundingEnd) onlyBefore(investmentEnd) returns (bytes4) {
+		if (ownedNftTokenIds[msg.sender].length == 0) {
+			ownedNftAddresses.push(msg.sender);
+		}
+		ownedNftTokenIds[msg.sender].push(tokenId);
+
+		return IERC721Receiver.onERC721Received.selector;
+	}
 
 	function ownedNftAddressesCount() external view returns (uint256) {
 		return ownedNftAddresses.length;

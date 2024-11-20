@@ -2,19 +2,7 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpe
 import { time } from '@nomicfoundation/hardhat-network-helpers'
 import { expect } from 'chai'
 import hre from 'hardhat'
-import {
-    getAddress,
-    parseEther,
-    WalletClient,
-    GetContractReturnType,
-    Address,
-    Transport,
-    Chain,
-    Account,
-    RpcSchema
-} from 'viem'
-import { NftInvestmentFund$Type } from '../artifacts/contracts/NftInvestmentFund.sol/NftInvestmentFund'
-import { MallorysMaliciousMisappropriation$Type } from '../artifacts/contracts/MallorysMaliciousMisappropriation.sol/MallorysMaliciousMisappropriation'
+import { getAddress, parseEther } from 'viem'
 
 describe('Investment fund', function () {
     async function baseScenario() {

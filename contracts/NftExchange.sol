@@ -65,13 +65,12 @@ contract NftExchange is Pausable, Ownable, IERC721Receiver {
 		if (listing.isSold) revert NFTAlreadySold();
 		if (msg.value < listing.price) revert InsufficientFunds();
 
+		listing.isSold = true;
+		emit NftSold(listingId, msg.sender);
+
 		(bool sent, ) = listing.seller.call{ value: listing.price }("");
 		if (!sent) revert FailedToSendEther();
 		IERC721(listing.nftContract).safeTransferFrom(address(this), msg.sender, listing.nftTokenId);
-
-		listing.isSold = true;
-
-		emit NftSold(listingId, msg.sender);
 	}
 
 	function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
