@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "compile": "npx hardhat compile",
-        "test": "REPORT_GAS=true CONTRACT_SIZER=true npx hardhat test",
+        "test": "npx hardhat test",
         "lint": "npm run lint:eslint && npm run lint:prettier",
         "lint:eslint": "npx eslint .",
         "lint:prettier": "npx prettier --check \"**/*.{js,sol,ts,json,jsx,tsx}\"",
@@ -31,6 +31,7 @@
     },
     "dependencies": {
         "@openzeppelin/contracts": "^5.1.0",
-        "r": "^0.0.5"
+        "r": "^0.0.5",
+        "surya": "^0.4.12"
     }
 }

