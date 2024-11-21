@@ -90,13 +90,13 @@ contract NftInvestmentFund is AccessControl, IERC721Receiver {
 		if (balanceAtEnd > 0 && fundTokensAtEnd > 0 && fundToken.balanceOf(msg.sender) > 0) {
 			uint256 withdrawAmount = (balanceAtEnd / fundTokensAtEnd) * fundToken.balanceOf(msg.sender);
 
-			(bool sent, ) = payable(msg.sender).call{ value: withdrawAmount }("");
-			require(sent, "Failed to send Ether");
-
 			// Their tokens are burnt so that they cannot withdraw twice
 			balanceAtEnd -= withdrawAmount;
 			fundTokensAtEnd -= fundToken.balanceOf(msg.sender);
 			fundToken.burnFrom(msg.sender, fundToken.balanceOf(msg.sender));
+
+			(bool sent, ) = payable(msg.sender).call{ value: withdrawAmount }("");
+			require(sent, "Failed to send Ether");
 		}
 	}
 
