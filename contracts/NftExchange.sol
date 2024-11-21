@@ -7,7 +7,7 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { IERC721Receiver } from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-contract NftExchange is IERC721Receiver {
+contract NftExchange is Pausable, Ownable, IERC721Receiver {
 	uint256 private _nextListingId;
 
 	struct Listing {
@@ -28,7 +28,17 @@ contract NftExchange is IERC721Receiver {
 	error InsufficientFunds();
 	error FailedToSendEther();
 
-	function sellNFT(address nftContract, uint256 nftTokenId, uint256 price) public returns (uint256) {
+	constructor() Ownable(msg.sender) {}
+
+	function pause() public onlyOwner {
+		_pause();
+	}
+
+	function unpause() public onlyOwner {
+		_unpause();
+	}
+
+	function sellNFT(address nftContract, uint256 nftTokenId, uint256 price) public whenNotPaused returns (uint256) {
 		IERC721(nftContract).safeTransferFrom(msg.sender, address(this), nftTokenId);
 
 		uint256 listingId = _nextListingId++;
@@ -50,7 +60,7 @@ contract NftExchange is IERC721Receiver {
 		return _nextListingId;
 	}
 
-	function buyNFT(uint256 listingId) public payable {
+	function buyNFT(uint256 listingId) public payable whenNotPaused {
 		Listing storage listing = listings[listingId];
 		if (listing.isSold) revert NFTAlreadySold();
 		if (msg.value < listing.price) revert InsufficientFunds();
